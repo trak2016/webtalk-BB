@@ -1,0 +1,22 @@
+{
+  "name": "webtalk",
+  "version": "1.0.0",
+  "description": "internal education project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://dzbyrad@bitbucket.org/dzbyrad/webtalk.git"
+  },
+  "keywords": [
+    "angularjs",
+    "nodejs",
+    "webrtc",
+    "socketio"
+  ],
+  "author": "Dariusz Zbyrad",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/dzbyrad/webtalk#readme"
+}
