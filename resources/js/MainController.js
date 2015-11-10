@@ -29,7 +29,6 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
       socket.on('chat message', function(msg){
         $scope.messages.push(msg);
         $scope.$apply()
-        //$('#messages').append($('<li>').text(msg));
       });
     };
 

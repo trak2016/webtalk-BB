@@ -1,15 +1,23 @@
-<div ng-show="showUserLoginForm">
-  <input ng-model="login" type="text" />
-  <button id="submit" ng-click="onLoginUser()">Join!</button>
-</div>
+  <div id="chat" ng-show="showChatForm">
+    <ul id="messages">
+      <li ng-repeat="msg in messages track by $index">
+        {{msg}}
+      </li>
+    </ul>
+    <form action="">
+      <input ng-model="message" autocomplete="off" /><button ng-click="onSubmitMessage()">Send</button>
+    </form>
+  </div>
 
-<div id="chat" ng-show="showChatForm">
-  <ul id="messages">
-    <li ng-repeat="msg in messages track by $index">
-      {{msg}}
-    </li>
-  </ul>
-  <form action="">
-    <input ng-model="message" autocomplete="off" /><button ng-click="onSubmitMessage()">Send</button>
-  </form>
+<div id="login-modal" ng-show="showUserLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="loginmodal-container">
+      <h1>Login to WebTalk</h1><br>
+      <form>
+        <input type="text" name="user" ng-model="login" placeholder="Username"/>
+        <br>
+        <input type="submit" name="login" class="btn btn-lg btn-success btn-block" ng-click="onLoginUser()" value="Join">
+      </form>
+    </div>
+  </div>
 </div>
