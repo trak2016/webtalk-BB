@@ -1,12 +1,18 @@
-  <div id="chat" ng-show="showChatForm">
-    <ul id="messages">
-      <li ng-repeat="msg in messages track by $index">
-        {{msg}}
-      </li>
-    </ul>
-    <form action="">
-      <input ng-model="message" autocomplete="off" /><button ng-click="onSubmitMessage()">Send</button>
-    </form>
+  <div class="row" id="chat" ng-show="showChatForm">
+    <div class="col-md-offset-1 col-md-10 message-panel">
+      <div class="panel panel-default">
+        <ul id="messages">
+          <li ng-repeat="msg in messages track by $index">
+            {{msg}}
+          </li>
+        </ul>
+      </div>
+      <div class="panel-footer">
+        <form action="">
+          <input ng-model="message" autocomplete="off" /><button ng-click="onSubmitMessage()">Send</button>
+        </form>
+      </div>
+    </div>
   </div>
 
 <div id="login-modal" ng-show="showUserLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
