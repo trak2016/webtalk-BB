@@ -5,6 +5,8 @@ var io = require('socket.io')(http);
 
 var clients = {};
 
+var self = this;
+
 app.use('/resources', express.static(__dirname + '/resources'));
 app.use('/partials', express.static(__dirname + '/partials'));
 
@@ -15,11 +17,16 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
 
   socket.on('add-user', function(data) {
-    clients[data.username] = {
-      "socket": socket.id
-    };
-
-    console.log(new Date() + '::Add new user: ' + data.username);
+    if (clients[data.username] == undefined) {
+      clients[data.username] = {
+        'socket': socket.id
+      };
+      self.sendInfoNewUser(socket.id, 'added');
+      console.log(new Date() + '::Add new user: ' + data.username);
+    } else {
+      self.sendInfoNewUser(socket.id, 'exist');
+      console.log(new Date() + '::User ' + data.username + ' already exists');
+    }
   });
 
   //Removing the socket on disconnect
@@ -36,6 +43,10 @@ io.on('connection', function(socket){
     io.emit('chat message', msg);
   });
 });
+
+self.sendInfoNewUser = function(socketId, msg) {
+  io.sockets.connected[socketId].emit('new user info', msg);
+}
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

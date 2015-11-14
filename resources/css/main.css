@@ -11,6 +11,12 @@ body {
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
+.user-exist {
+  color: rgba(236, 58, 58, 0.84);
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
 .message-panel {
   margin-top: 20px;
   /*margin-bottom: 20px;
