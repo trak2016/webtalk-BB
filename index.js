@@ -33,13 +33,22 @@ io.on('connection', function(socket){
 
   //Removing the socket on disconnect
   socket.on('disconnect', function() {
-    console.log('Disconnect user ' + self.getUserNameBySocketId(socket.id));
+    var username = self.getUserNameBySocketId(socket.id);
+    console.log('Disconnect user ' + username);
+
+    //Remove from users list
   	for(var name in clients) {
   		if(clients[name].socket === socket.id) {
   			delete clients[name];
   			break;
   		}
   	}
+
+    //Send message to other users about it
+    var data = {'type' : 'DISCONNECT',
+                'author': 'SYSTEM',
+                'body': username};
+    self.sendMessageToAll(data);
   })
 
   //Receive chat message

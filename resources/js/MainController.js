@@ -34,10 +34,12 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
         } else { //system message
           if ('JOIN' === data.type) { //message about new user
             message = message + ' join us!';
+          } else if ('DISCONNECT' === data.type) { //message about disconnected user
+            message = message + ' left the chat';
           }
         }
 
-        //Add info about when message was sent
+        //Add info about when the message was sent
         message = $scope.getDate() + ' ' + message;
 
         //Add message to chat
