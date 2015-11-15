@@ -37,6 +37,9 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
           }
         }
 
+        //Add info about when message was sent
+        message = $scope.getDate() + ' ' + message;
+
         //Add message to chat
         $scope.messages.push(message);
         $scope.$apply();
@@ -54,6 +57,11 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
 
         $scope.$apply();
       });
+    };
+
+    $scope.getDate = function() {
+      var date = new Date();
+      return date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     };
 
     $scope.init();
