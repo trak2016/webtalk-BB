@@ -24,22 +24,20 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
     };
 
     $scope.init = function() {
-      //Receive chat message
-      socket.on('chat message', function(msg){
-        console.log("New message: " + msg);
-        $scope.messages.push(msg);
-        $scope.$apply();
-      });
-
-      //TODO: merge with 'chat message' listener
+      //Receive message
       socket.on('message', function(data){
-        console.log('New message from ' + data.author + ': ' + data.msg);
+        console.log('New message ' + 'type: ' + data.type + ' from ' + data.author + ': ' + data.body);
 
-        var message = data.msg;
-        if ('server' !== data.author) {
+        var message = data.body;
+        if ('SYSTEM' !== data.author) { //message from other user
           message = data.author + ': ' + message;
+        } else { //system message
+          if ('JOIN' === data.type) { //message about new user
+            message = message + ' join us!';
+          }
         }
 
+        //Add message to chat
         $scope.messages.push(message);
         $scope.$apply();
       });

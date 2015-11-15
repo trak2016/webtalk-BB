@@ -16,14 +16,15 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 
+  //When user wants join to chat
   socket.on('add-user', function(data) {
     if (clients[data.username] == undefined) { //if user name is unique
       clients[data.username] = {
         'socket': socket.id
       };
       self.sendInfoNewUser(socket.id, 'added');
-      self.sendMessageToAllWithoutSpecyficUser(data.username, 'server', data.username + " joined us!");
-      console.log(new Date() + '::Add new user: ' + data.username);
+      self.sendMessageAboutNewUser(data.username);
+      console.log(new Date() + '::Add new user: ' + data.username + ' with socket id: ' + socket.id);
     } else {  //if user name already exists
       self.sendInfoNewUser(socket.id, 'exist');
       console.log(new Date() + '::User ' + data.username + ' already exists');
@@ -32,6 +33,7 @@ io.on('connection', function(socket){
 
   //Removing the socket on disconnect
   socket.on('disconnect', function() {
+    console.log('Disconnect user ' + self.getUserNameBySocketId(socket.id));
   	for(var name in clients) {
   		if(clients[name].socket === socket.id) {
   			delete clients[name];
@@ -40,21 +42,51 @@ io.on('connection', function(socket){
   	}
   })
 
+  //Receive chat message
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    var data = {'type' : 'MSG',
+                'author': self.getUserNameBySocketId(socket.id),
+                'body': msg};
+
+    console.log('Message from ' + data.author + ': ' + data.body);
+
+    self.sendMessageToAll(data);
   });
 });
+
+//Get user name form users list by socket id
+self.getUserNameBySocketId = function(socketId) {
+  for(var name in clients) {
+    if(clients[name].socket === socketId) {
+      return name;
+    }
+  }
+}
+
+//Send message to other users about new user
+self.sendMessageAboutNewUser = function(username) {
+  var data = {'type': 'JOIN',
+              'author': 'SYSTEM',
+              'body': username};
+
+  self.sendMessageToAllWithoutSpecyficUser(username, data);
+}
 
 //Send status to the user who wants to join
 self.sendInfoNewUser = function(socketId, msg) {
   io.sockets.connected[socketId].emit('new user info', msg);
 }
 
+//Send message to all users
+self.sendMessageToAll = function(data) {
+  io.emit('message', data);
+}
+
 //Send message to all users without specyfic user
-self.sendMessageToAllWithoutSpecyficUser = function(excludedUserName, author, msg) {
+self.sendMessageToAllWithoutSpecyficUser = function(excludedUserName, data) {
   for(var name in clients) {
     if(name != excludedUserName) {
-      io.sockets.connected[clients[name].socket].emit('message', {'msg': msg, 'author': author});
+      io.sockets.connected[clients[name].socket].emit('message', data);
     }
   }
 }
