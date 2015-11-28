@@ -39,8 +39,8 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
           }
         }
 
-        //Add info about when the message was sent
-        message = $scope.getDate() + ' ' + message;
+        var date = new Date();
+        message = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ' ' + message;
 
         //Add message to chat
         $scope.messages.push(message);
@@ -53,17 +53,12 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
           $scope.showUserLoginForm = false;
           $scope.showChatForm = true;
           $scope.login = '';
-        } else { //Show message "User already exists"
+        } else { //Show message 'User already exists'
           $scope.showExistUserMsg = true;
         }
 
         $scope.$apply();
       });
-    };
-
-    $scope.getDate = function() {
-      var date = new Date();
-      return date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     };
 
     $scope.init();
