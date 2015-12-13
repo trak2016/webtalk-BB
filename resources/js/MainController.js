@@ -1,14 +1,13 @@
-controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+controllers.controller('MainCtrl', ['$scope', '$http', 'StateService', function ($scope, $http, StateService) {
 
-    var socket = io();
+    var socket = StateService.getSocketIO();
 
     $scope.message = '';
     $scope.login = '';
-    $scope.showUserLoginForm = true;
-    $scope.showChatForm = false;
-    $scope.showExistUserMsg = false;
 
     $scope.messages = [];
+
+    $scope.isLoggedUser = StateService.isLoggedUser;
 
     $scope.onLoginUser = function() {
       // Tell the server about it
@@ -43,15 +42,16 @@ controllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) 
         message = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ' ' + message;
 
         //Add message to chat
-        $scope.messages.push(message);
-        $scope.$apply();
+
+        $scope.$apply( function() {
+          $scope.messages.push(message);
+        });
       });
 
       //Message with status from server about new user
       socket.on('new user info', function(msg){
         if ('added' === msg) { // Remove login form and show the chat form
-          $scope.showUserLoginForm = false;
-          $scope.showChatForm = true;
+          StateService.setLoggedUser(true);
           $scope.login = '';
         } else { //Show message 'User already exists'
           $scope.showExistUserMsg = true;
