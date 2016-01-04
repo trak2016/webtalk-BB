@@ -25,6 +25,7 @@ cd webtalk
 git checkout develop
 git pull
 npm install
+node index.js
 ```
 
-Aplikacja jest dostępna pod adresem http://host:3000:/?#
+Aplikacja jest dostępna pod adresem http://host:3000:/?#/
