@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app='WebTalk'>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" type="text/css" href="resources/css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- SPELLS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-route.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <!-- APPLICATION -->
+    <script src="resources/js/App.js"></script>
+
+    <!-- CONTROLLERS -->
+    <script src="resources/js/MainController.js"></script>
+
+    <!-- SERVICES -->
+    <script src="resources/js/StateService.js"></script>
+
+  </head>
+  <body>
+    <div ng-view></div>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+  <div class="row" id="chat" ng-show="isLoggedUser()">
+    <div class="col-md-offset-1 col-md-10 message-panel">
+      <div class="panel panel-default">
+        <ul id="messages">
+          <li ng-repeat="msg in messages track by $index">
+            {{msg}}
+          </li>
+        </ul>
+      </div>
+      <div class="panel-footer">
+        <form action="">
+          <input ng-model="message" autocomplete="off" /><button ng-click="onSubmitMessage()">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<div id="login-modal" ng-hide="isLoggedUser()" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="loginmodal-container">
+      <h1>Login to WebTalk</h1>
+      <br ng-hide="showExistUserInfo">
+      <h4 class="user-exist" ng-show="showExistUserMsg">User already exists</h4>
+      <form>
+        <input type="text" name="user" ng-model="login" placeholder="Username"/>
+        <br>
+        <input type="submit" name="login" class="btn btn-lg btn-success btn-block" ng-click="onLoginUser()" value="Join">
+      </form>
+    </div>
+  </div>
+</div>
